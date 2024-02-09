@@ -46,17 +46,18 @@
    <h3>Task Update</h3>
    <hr>
 
-   <form action="" method="POST" novalidate class="shadow p-5">
-    {% for message in messages %}
-     <p class=" text-center text-success mb-5">{{message}}</p>
-    {% endfor %}
-
+   <form action="" method="POST" novalidate class="shadow p-5" enctype="multipart/form-data">
     {% csrf_token %}
-     {{ form.as_p }}
-    <div class="text-end">
-     <button type="submit" class="btn btn-success">Submit</button>
+    {{ form.as_p }}
+    <div>
+        <label for="id_new_photo">New Photo:</label>
+        <input type="file" name="new_photo" id="id_new_photo">
     </div>
-   </form>
+    <div class="text-end">
+        <button type="submit" class="btn btn-success">Submit</button>
+    </div>
+</form>
+
   </div>
  </div>
 </div>

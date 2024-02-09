@@ -3,7 +3,7 @@ from django.contrib.auth import password_validation
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UsernameField, PasswordResetForm, \
     SetPasswordForm, PasswordChangeForm
 from django.contrib.auth.models import User
-from .models import Task, TaskPhoto
+from .models import Task
 
 
 class RegistrationsFrom(UserCreationForm):
@@ -53,16 +53,6 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ['title', 'description', 'due_date', 'priority', 'is_complete']
-
-
-class TaskPhotoForm(forms.ModelForm):
-    class Meta:
-        model = TaskPhoto
-        fields = ['task', 'photo']
-
-    def __init__(self, *args, **kwargs):
-        super(TaskPhotoForm, self).__init__(*args, **kwargs)
-        self.fields['task'].widget = forms.Select(attrs={'class': 'form-control'})
 
 
 

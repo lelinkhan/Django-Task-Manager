@@ -5,9 +5,13 @@
 
 <div class="container">
   <h1 class="text-center">Task List</h1>
+    {% for message in messages %}
+     {% if message.tags == 'success' %}
+            <p class="text-center text-success mb-5">{{ message }}</p>
+        {% endif %}
+    {% endfor %}
   <div style="text-align:right; padding-bottom:4px">
       <a href="{% url 'task-create' %}"><button class="btn btn-success">Create New Task</button></a>
-      <a href="{% url 'task-photo-create' %}"><button class="btn btn-success">Create PhotoTask</button></a>
     </div>
       <form class="d-flex" method="get" action="{% url 'search' %}">
            <input class="form-control me-2" name="query" type="text" placeholder="Search" aria-label="Search">
@@ -19,7 +23,9 @@
         <th>Number</th>
         <th>Title</th>
         <th>Description</th>
-        <th>Due Date</th>
+        <th>DueDate</th>
+        <th>CreateTime</th>
+        <th>UpdateTime</th>
         <th>Priority</th>
         <th>Complete</th>
         <th>Photo</th>
@@ -27,47 +33,39 @@
       </tr>
     </thead>
     <tbody>
-      {% for task in tasks %}
+            {% for task in tasks %}
       <tr>
-        <td>{{forloop.counter}}</td>
-        <td>{{ task.title }}</td>
-        <td>{{ task.description }}</td>
-        <td>{{ task.due_date }}</td>
-        <td>{{ task.get_priority_display }}</td>
-        <td>
-          {% if task.complete %}
-          <span class="badge badge-success">Complete</span>
-          {% else %}
-          <span class="badge badge-warning">Incomplete</span>
-          {% endif %}
-        </td>
-        <td>
-        {% for images in tasksimg %}
-          {% if images.id == task.id %}
-            <img src="{{ images.photo.url }}" alt="" width="100" height="50">
-           {% endif %}
-      {% empty %}
-        <p>No image found</p>
-      {% endfor %}
-
-        </td>
-        <td>
-          <div style="display: flex;">
-            {% if request.user == task.creator %}
-              <a href="{% url 'task-detail' task.id %}" class="btn btn-primary btn-sm">Details</a>
-              <span class="btn-separator">|</span>
-              <a href="{% url 'task-update' task.id %}" class="btn btn-warning btn-sm">Update</a>
-              <span class="btn-separator">|</span>
-              <a href="{% url 'task-delete' task.id %}" class="btn btn-danger btn-sm">Delete</a>
-            {% else %}
-              <a href="{% url 'task-detail' task.id %}" class="btn btn-primary btn-sm">Details</a>
-              <button class="btn btn-danger" disabled>Update</button>
-              <button class="btn btn-info" disabled>Delete</button>
-            {% endif %}
-          </div>
-        </td>
+          <td>{{forloop.counter}}</td>
+          <td>{{ task.title }}</td>
+          <td>{{ task.description }}</td>
+          <td>{{ task.due_date }}</td>
+          <td>{{ task.creation_datetime }}</td>
+          <td>{{ task.last_update_datetime }}</td>
+          <td>{{ task.get_priority_display }}</td>
+          <td>
+              {% if task.is_complete %}
+              <span class="badge badge-success">Complete</span>
+              {% else %}
+              <span class="badge badge-warning">Incomplete</span>
+              {% endif %}
+          </td>
+          <td>
+              {% if task.photo %}
+              <img src="{{ task.photo.url }}" alt="Task Photo" width="100" height="50">
+              {% else %}
+              <p>No image found</p>
+              {% endif %}
+          </td>
+          <td>
+              <div style="display: flex;">
+                  <a href="{% url 'task-detail' task.id %}" class="btn btn-primary btn-sm">Details</a>
+                  <a href="{% url 'task-update' task.id %}" class="btn btn-warning btn-sm">Update</a>
+                  <a href="{% url 'task-delete' task.id %}" class="btn btn-danger btn-sm">Delete</a>
+              </div>
+          </td>
       </tr>
       {% endfor %}
+
     </tbody>
 
   </table>

@@ -17,13 +17,9 @@ class Task(models.Model):
     creation_datetime = models.DateTimeField(auto_now_add=True)
     last_update_datetime = models.DateTimeField(auto_now=True)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
+    photo = models.ImageField(upload_to='task_photos/', null=True, default=None)
 
     def __str__(self):
         return self.title
 
-
-
-class TaskPhoto(models.Model):
-    task = models.ForeignKey(Task, related_name='photos', on_delete=models.CASCADE)
-    photo = models.ImageField(upload_to='task_photos/')
 

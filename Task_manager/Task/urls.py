@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
 from .forms import LoginForm, MyPasswordResetForm, MyPasswordSetForm, MyChangePasswordForm
-from .views import TaskListView, TaskCreateView, TaskDetailView, TaskUpdateView, TaskDeleteView, TaskPhotoCreateView
+from .views import TaskListView, TaskCreateView, TaskDetailView, TaskUpdateView, TaskDeleteView
 
 urlpatterns = [
     path('', views.LandingPageView.as_view(), name='landing-page'),
@@ -34,6 +34,5 @@ urlpatterns = [
     path('tasks/<int:task_id>/update/', TaskUpdateView.as_view(), name='task-update'),
     path('tasks/<int:task_id>/delete/', TaskDeleteView.as_view(), name='task-delete'),
 
-    path('task/photo/create/', TaskPhotoCreateView.as_view(), name='task-photo-create'),
     path('search/', views.SearchItemView.as_view(), name='search'),
 ]
