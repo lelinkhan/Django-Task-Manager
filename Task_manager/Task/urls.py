@@ -2,8 +2,10 @@ from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
 from .forms import LoginForm, MyPasswordResetForm, MyPasswordSetForm, MyChangePasswordForm
+from .views import TaskListView, TaskCreateView, TaskDetailView, TaskUpdateView, TaskDeleteView, TaskPhotoCreateView
 
 urlpatterns = [
+    path('', views.LandingPageView.as_view(), name='landing-page'),
     path('registration/', views.RegistrationView.as_view(), name='registration'),
     path('login/', auth_views.LoginView.as_view(template_name='login.html', authentication_form=LoginForm),
          name='login'),
@@ -25,4 +27,13 @@ urlpatterns = [
                                                success_url='/passwordchangedone/'), name='passwordchange'),
     path('passwordchangedone/', auth_views.PasswordChangeView.as_view(template_name='passwordchangedone.html'),
          name='passwordchangedone'),
+
+    path('tasks/', TaskListView.as_view(), name='task-list'),
+    path('tasks/create/', TaskCreateView.as_view(), name='task-create'),
+    path('tasks/<int:task_id>/', TaskDetailView.as_view(), name='task-detail'),
+    path('tasks/<int:task_id>/update/', TaskUpdateView.as_view(), name='task-update'),
+    path('tasks/<int:task_id>/delete/', TaskDeleteView.as_view(), name='task-delete'),
+
+    path('task/photo/create/', TaskPhotoCreateView.as_view(), name='task-photo-create'),
+    path('search/', views.SearchItemView.as_view(), name='search'),
 ]

@@ -3,6 +3,7 @@ from django.contrib.auth import password_validation
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UsernameField, PasswordResetForm, \
     SetPasswordForm, PasswordChangeForm
 from django.contrib.auth.models import User
+from .models import Task, TaskPhoto
 
 
 class RegistrationsFrom(UserCreationForm):
@@ -46,6 +47,22 @@ class MyChangePasswordForm(PasswordChangeForm):
                                     help_text=password_validation.password_validators_help_text_html())
     new_password2 = forms.CharField(label='New Password', widget=forms.PasswordInput(
         attrs={'class': 'form-control', 'autocomplete': 'new-password'}))
+
+
+class TaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ['title', 'description', 'due_date', 'priority', 'is_complete']
+
+
+class TaskPhotoForm(forms.ModelForm):
+    class Meta:
+        model = TaskPhoto
+        fields = ['task', 'photo']
+
+    def __init__(self, *args, **kwargs):
+        super(TaskPhotoForm, self).__init__(*args, **kwargs)
+        self.fields['task'].widget = forms.Select(attrs={'class': 'form-control'})
 
 
 
