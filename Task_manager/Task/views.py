@@ -5,12 +5,12 @@ from django.contrib import messages
 from .models import Task, TaskPhoto
 
 
-
 class LandingPageView(View):
     template_name = 'home.html'
 
     def get(self, request):
         return render(request, self.template_name)
+
 
 class RegistrationView(View):
     def get(self, request):
@@ -66,7 +66,6 @@ class TaskCreateView(View):
             'form1': form1
         }
         return render(request, 'task_creation.html', context)
-
 
 
 class TaskPhotoCreateView(View):
