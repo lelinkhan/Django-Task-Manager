@@ -4,7 +4,7 @@ from rest_framework import status
 from Task.models import Task
 from Task_API.serializers import TaskSerializer
 from drf_yasg.utils import swagger_auto_schema
-
+from django.http import Http404
 
 
 class TaskListAPIView(APIView):
